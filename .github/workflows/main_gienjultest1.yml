@@ -25,10 +25,10 @@ jobs:
 
     - name: npm install, build, and test
       run: |
-        cd /Frontend/gi-en-jul
         npm install
         npm run build --if-present
         npm run test --if-present
+      working-directory: Frontend/gi-en-jul
 
     - name: Run Azure webapp deploy action using publish profile credentials
       uses: azure/webapps-deploy@v2
