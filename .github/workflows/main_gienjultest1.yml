@@ -34,7 +34,7 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: GiEnJulTest1
-        slot-name: Test
+        slot-name: Production
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_77464987B9E74190BC5265CFC7E01F38 }}
         package: Frontend/gi-en-jul
 
