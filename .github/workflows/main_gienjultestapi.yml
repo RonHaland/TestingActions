@@ -9,6 +9,11 @@ on:
       - main
     paths:
       - 'Backend/**'
+      
+env:
+  AZURE_WEBAPP_NAME: gienjultestapi    # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: 'Backend/WebApplication1'      # set this to the path to your web app project, defaults to the repository root
+  DOTNET_VERSION: '2.2.402'           # set this to the dot net version to use
 
 jobs:
   build-and-deploy:
@@ -23,21 +28,20 @@ jobs:
     - name: Set up .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '2.2'
+        dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+    # Run dotnet build and publish
+    - name: dotnet build and publish
+      run: |
+        dotnet restore
+        dotnet build --configuration Release
+        dotnet publish -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
       working-directory: Backend/WebApplication1
-
-    - name: dotnet publish
-      run: dotnet publish -c Release -o Backend/WebApplication1
-      working-directory: Backend/WebApplication1
-
-    - name: Run Azure webapp deploy action using publish profile credentials
+      
+    - name: 'Run Azure webapp deploy action using publish profile credentials'
       uses: azure/webapps-deploy@v2
-      with:
-        app-name: gienjultestapi
-        slot-name: Production
-        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6E7F3CD2318F4E029E378537D5783F7B }}
-        package: Backend/WebApplication1
+      with: 
+        app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6E7F3CD2318F4E029E378537D5783F7B }} # Define secret variable in repository settings as per action documentation
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
