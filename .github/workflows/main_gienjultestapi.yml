@@ -30,6 +30,7 @@ jobs:
 
     - name: dotnet publish
       run: dotnet publish -c Release -o Backend/WebApplication1
+      working-directory: Backend/WebApplication1
 
     - name: Run Azure webapp deploy action using publish profile credentials
       uses: azure/webapps-deploy@v2
