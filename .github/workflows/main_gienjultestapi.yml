@@ -27,6 +27,7 @@ jobs:
 
     - name: Build with dotnet
       run: dotnet build --configuration Release
+      working-directory: Backend/WebApplication1
 
     - name: dotnet publish
       run: dotnet publish -c Release -o Backend/WebApplication1
