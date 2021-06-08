@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://go.microsoft.com/fwlink/?linkid=2134798
 # More GitHub Actions for Azure: https://go.microsoft.com/fwlink/?linkid=2135048
 
-name: Azure App Service - GiEnJulTest1(Production), Build and deploy NodeJS app
+name: Deploy Frontend - React app
 
 on:
   push:
@@ -9,6 +9,7 @@ on:
       - main
     paths:
       - 'Frontend/**'
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -38,5 +39,5 @@ jobs:
         app-name: GiEnJulTest1
         slot-name: Production
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_77464987B9E74190BC5265CFC7E01F38 }}
-        package: Frontend/gi-en-jul
+        package: Frontend/gi-en-jul/build
 
