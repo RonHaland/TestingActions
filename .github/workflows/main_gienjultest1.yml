@@ -31,7 +31,7 @@ jobs:
         npm ci
         npm run build --if-present
         npm run test --if-present
-      working-directory: Frontend/gi-en-jul
+      working-directory: Frontend
 
     - name: Run Azure webapp deploy action using publish profile credentials
       uses: azure/webapps-deploy@v2
@@ -39,5 +39,5 @@ jobs:
         app-name: GiEnJulTest1
         slot-name: Production
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_77464987B9E74190BC5265CFC7E01F38 }}
-        package: Frontend/gi-en-jul/build
+        package: Frontend
 
