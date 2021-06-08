@@ -43,5 +43,5 @@ jobs:
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6E7F3CD2318F4E029E378537D5783F7B }} # Define secret variable in repository settings as per action documentation
-        package: Backend/ApiApp/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        package: Backend/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
