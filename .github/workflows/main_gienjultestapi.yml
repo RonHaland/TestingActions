@@ -35,15 +35,13 @@ jobs:
       run: |
         dotnet restore
         dotnet build --configuration Release
+        dotnet publish -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
       working-directory: Backend/WebApplication1
-      
-    - name: publish
-      run: dotnet publish -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
       
     - name: 'Run Azure webapp deploy action using publish profile credentials'
       uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6E7F3CD2318F4E029E378537D5783F7B }} # Define secret variable in repository settings as per action documentation
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        package: Backend/WebApplication1/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
