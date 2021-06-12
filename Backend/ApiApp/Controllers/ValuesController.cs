@@ -6,12 +6,10 @@ namespace ApiApp.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        [HttpPost]
-        public string Lmao()
+        [HttpPost, HttpGet]
+        public ObjectResult Lmao()
         {
-            return "kek";
-
-
+            return Ok("kek");
         }
     }
 }

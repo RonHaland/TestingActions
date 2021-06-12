@@ -1,10 +1,14 @@
+using ApiApp.Infrastructure;
+using ApiApp.Model;
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using System;
 
 namespace ApiApp
 {
@@ -16,18 +20,22 @@ namespace ApiApp
         }
 
         public IConfiguration Configuration { get; }
+        public ILifetimeScope AutofacContainer { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<Serilog.ILogger>(c => new LoggerConfiguration().CreateLogger());
-            var builder = new ContainerBuilder();
+            //services.AddSingleton<ILogger>(c => new LoggerConfiguration().WriteTo.Console().CreateLogger());
+        }
 
-            //builder.RegisterType<ServiceClass>.As<IServiceInterface>();
-            builder.Register(c => new LoggerConfiguration().CreateLogger()).As<Serilog.ILogger>();
-
-            builder.Build();
+        public void ConfigureContainer(ContainerBuilder builder) 
+        {
+            builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
+            var settings = new Settings(Configuration);
+            var test = Environment.GetEnvironmentVariables();
+            builder.Register(c => settings).As<ISettings>().InstancePerLifetimeScope();
+            builder.Register(c => new LoggerConfiguration().MinimumLevel.Is(settings.LogLevel).WriteTo.Console().CreateLogger()).As<ILogger>().SingleInstance();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,6 +45,9 @@ namespace ApiApp
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            AutofacContainer = app.ApplicationServices.GetAutofacRoot();
+
 
             app.UseHttpsRedirection();
 
