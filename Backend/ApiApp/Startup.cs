@@ -22,11 +22,9 @@ namespace ApiApp
         public IConfiguration Configuration { get; }
         public ILifetimeScope AutofacContainer { get; private set; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //services.AddSingleton<ILogger>(c => new LoggerConfiguration().WriteTo.Console().CreateLogger());
         }
 
         public void ConfigureContainer(ContainerBuilder builder) 
@@ -38,7 +36,6 @@ namespace ApiApp
             builder.Register(c => new LoggerConfiguration().MinimumLevel.Is(settings.LogLevel).WriteTo.Console().CreateLogger()).As<ILogger>().SingleInstance();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
