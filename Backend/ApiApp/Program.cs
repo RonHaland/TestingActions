@@ -18,8 +18,7 @@ namespace ApiApp
             .ConfigureAppConfiguration((hostCtx, config) => 
                 config
                     .AddJsonFile("appsettings.json")
-                    .AddEnvironmentVariables()
-                    .Build())
+                    .AddEnvironmentVariables())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

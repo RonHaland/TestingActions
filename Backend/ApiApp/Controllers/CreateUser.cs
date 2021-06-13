@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace ApiApp.Controllers
 {
+    public class CreateUserInput
+    {
+        public string Name { get; set; }
+    }
+
     [Route("create")]
     [ApiController]
     public class CreateUser : ControllerBase
@@ -20,13 +25,13 @@ namespace ApiApp.Controllers
         }
 
         [HttpPost]
-        public async Task Post([FromBody]string str) 
+        public async Task Post([FromBody] CreateUserInput input) 
         {
-            _log.Debug($"Entered CreateUser-Post with Value {str}");
+            _log.Debug($"Entered CreateUser-Post with Value {input.Name}");
 
             var user = new User();
-            user.UserName = str;
-            user.PartitionKey = str;
+            user.UserName = input.Name;
+            user.PartitionKey = input.Name;
             user.RowKey = Guid.NewGuid().ToString();
             await _userRepository.AddUser(user);
         }

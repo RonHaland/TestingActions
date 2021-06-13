@@ -3,11 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System.Collections.Generic;
 using System.Net.Mime;
-using System.Threading.Tasks;
 
 namespace ApiApp.Controllers
 {
-    [Route("api/[controller]")]
+    public class GetUserInput
+    {
+        public string Name { get; set; }
+    }
+
+    [Route("get")]
     [ApiController]
     [ProducesResponseType(200)]
     [Produces(MediaTypeNames.Application.Json)]
@@ -23,9 +27,9 @@ namespace ApiApp.Controllers
         }
 
         [HttpPost]
-        public IEnumerable<User> Get([FromBody] string name) 
+        public IEnumerable<User> Get([FromBody] GetUserInput name) 
         {
-            return _userRepository.GetUsersByName(name);
+            return _userRepository.GetUsersByName(name.Name);
         }
     }
 }
