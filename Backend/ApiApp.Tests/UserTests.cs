@@ -25,9 +25,21 @@ namespace ApiApp.Tests
         public void Should_Call_Get()
         {
             _log.Information("Should Call Get");
-            _SUT.Get("lmao");
+            var userInput = new GetUserInput() { Name = "lmao" };
+            _SUT.Get(userInput);
 
             _mockedUserRepo.Verify(x => x.GetUsersByName(It.Is<string>(s => s == "lmao")), Times.Once);
+            _log.Debug("Get was Called once");
+        }
+
+        [Test]
+        public void Should_Call_Get_Twice()
+        {
+            _log.Information("Should Call Get");
+            var userInput = new GetUserInput() { Name = "lmao" };
+            _SUT.Get(userInput);
+
+            _mockedUserRepo.Verify(x => x.GetUsersByName(It.Is<string>(s => s == "lmao")), Times.Exactly(2));
             _log.Debug("Get was Called once");
         }
     }
