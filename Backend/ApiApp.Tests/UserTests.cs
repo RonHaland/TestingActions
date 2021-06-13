@@ -33,6 +33,7 @@ namespace ApiApp.Tests
         }
 
         [Test]
+        [Ignore("Just a dumb test test")]
         public void Should_Call_Get_Twice()
         {
             _log.Information("Should Call Get");
