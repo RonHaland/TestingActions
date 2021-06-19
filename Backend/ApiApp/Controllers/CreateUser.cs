@@ -1,4 +1,5 @@
 ﻿using ApiApp.Model;
+using ApiApp.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
@@ -25,15 +26,15 @@ namespace ApiApp.Controllers
         }
 
         [HttpPost]
-        public async Task Post([FromBody] CreateUserInput input) 
+        public async Task Post([FromBody] User input) 
         {
-            _log.Debug($"Entered CreateUser-Post with Value {input.Name}");
+            _log.Debug($"Entered CreateUser-Post with Value {input.UserName}");
 
             var user = new User();
-            user.UserName = input.Name;
-            user.PartitionKey = input.Name;
+            //user.UserName = input.Name;
+            //user.PartitionKey = input.Name;
             user.RowKey = Guid.NewGuid().ToString();
-            await _userRepository.AddUser(user);
+            await _userRepository.AddUser(input);
         }
     }
 }

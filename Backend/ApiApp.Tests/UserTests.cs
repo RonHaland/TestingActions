@@ -1,5 +1,6 @@
 using ApiApp.Controllers;
 using ApiApp.Model;
+using ApiApp.Repository;
 using Moq;
 using NUnit.Framework;
 using Serilog;

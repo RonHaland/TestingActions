@@ -27,6 +27,7 @@ namespace ApiApp.Controllers
         {
             var rng = new Random();
             _logger.Information("Some logging");
+            throw new Exception("Pretty bad news exception");
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),

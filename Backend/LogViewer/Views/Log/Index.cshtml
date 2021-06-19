@@ -1,0 +1,44 @@
+﻿@model LogPageModel
+
+@{
+    ViewData["Title"] = "Log";
+}
+
+<h1>Log Viewer</h1>
+
+<form>
+    <label>Log level: <select asp-items="Model.LogLevels" asp-for="SelectedLogLevel"></select></label>
+    <label>From: <input type="datetime-local" asp-for="SelectedFrom"/></label>
+    <label>To: <input type="datetime-local" asp-for="SelectedTo"/></label>
+    <input type="submit" name="SubmitButton" value="Apply" />
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th width="200px">
+                Time
+            </th>
+            <th width="125px">
+                Level
+            </th>
+            <th>
+                Message
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.LogEvents) {
+        <tr class="@item.Color">
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Level)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,4 +1,5 @@
 ﻿using ApiApp.Model;
+using ApiApp.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System.Collections.Generic;
@@ -29,6 +30,10 @@ namespace ApiApp.Controllers
         [HttpPost]
         public IEnumerable<User> Get([FromBody] GetUserInput name) 
         {
+            _log.Verbose("Getting user {@name}", name);
+            _log.Warning("Make sure user {name} exists", name.Name);
+            _log.Error("Just logging a random error :)");
+            _log.Fatal("This would normally be very bad :(");
             return _userRepository.GetUsersByName(name.Name);
         }
     }
