@@ -22,6 +22,14 @@ jobs:
     - name: 'Checkout Github Action'
       uses: actions/checkout@master
 
+    - name: Variable Substitution
+      uses: microsoft/variable-substitution@v1
+      with:
+        # comma separated list of XML/JSON/YAML files in which tokens are to be substituted. Files names must be specified relative to the folder-path.
+        files: Backend/ApiApp/appsettings.json
+      env:
+        LogLevel: "Verbose"
+        TableConnectionString: ${{ secrets.TABLE_CONN_STR }}
 
     - name: Set up .NET Core
       uses: actions/setup-dotnet@v1
