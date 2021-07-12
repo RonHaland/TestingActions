@@ -16,6 +16,14 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+      - name: Variable Substitution
+        uses: microsoft/variable-substitution@v1
+        with:
+          # comma separated list of XML/JSON/YAML files in which tokens are to be substituted. Files names must be specified relative to the folder-path.
+          files: Backend/ApiApp/appsettings.json
+        env:
+          LogLevel: "Verbose"
+          TableConnectionString: ${{ secrets.TABLE_CONN_STR }}
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
